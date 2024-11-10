@@ -9,9 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import {
-
   Book,
-
   BarChart,
   Zap,
   Star,
@@ -20,6 +18,9 @@ import {
   Menu,
   PieChart,
   Shield,
+  ChevronDown,
+  Github,
+  Linkedin,
 } from "lucide-react"
 import {
   Sheet,
@@ -29,6 +30,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion"
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -37,10 +44,10 @@ import {
 
 const navItems = [
   { id: "inicio", name: "Início", href: "#inicio" },
-  { id: "sobre", name: "Sobre", href: "#sobre" },
+  { id: "sobre", name: "Sobre Nós", href: "#sobre" },
   { id: "recursos", name: "Recursos", href: "#recursos" },
-  { id: "simulados", name: "Simulados", href: "#simulados" },
   { id: "depoimentos", name: "Depoimentos", href: "#depoimentos" },
+  { id: "faq", name: "FAQ", href: "#faq" },
   { id: "contato", name: "Contato", href: "#contato" },
 ]
 
@@ -97,31 +104,57 @@ const features = [
 
 
 
-const testimonials = [
+const faqs = [
   {
-    id: "maria",
-    name: "Maria Silva",
-    role: "Professora",
-    comment: "O Quita.AI transformou minha vida financeira. Em 6 meses, consegui limpar meu nome e hoje tenho total controle das minhas finanças.",
-    image: "/placeholder.svg?height=100&width=100",
-    rating: 5,
+    question: "Como o Quita.AI pode me ajudar a sair das dívidas?",
+    answer:
+      "Utilizamos inteligência artificial para analisar sua situação financeira e criar um plano de ação personalizado para você quitar suas dívidas de forma eficiente.",
   },
   {
-    id: "joao",
-    name: "João Santos",
-    role: "Autônomo",
-    comment: "A análise detalhada dos meus gastos abriu meus olhos. As recomendações da IA são práticas e realmente funcionam!",
-    image: "/placeholder.svg?height=100&width=100",
-    rating: 5,
+    question: "É seguro conectar minhas contas bancárias?",
+    answer:
+      "Sim, a segurança dos seus dados é nossa prioridade. Utilizamos criptografia de ponta a ponta para proteger todas as informações.",
   },
   {
-    id: "ana",
-    name: "Ana Oliveira",
-    role: "Estudante",
-    comment: "Como estudante, achei que seria impossível organizar minhas finanças. O Quita.AI provou que é possível com as ferramentas certas!",
-    image: "/placeholder.svg?height=100&width=100",
-    rating: 5,
+    question: "O Quita.AI é gratuito?",
+    answer:
+      "Oferecemos uma versão gratuita com recursos limitados e planos premium com funcionalidades avançadas.",
   },
+]
+const teamMembers = [
+  {
+    id: "anthony",
+    name: "Anthony Thomas",
+    role: "Desenvolvedor Full-Stack",
+    photo: "/time/anthony.jpg",
+    linkedin: "https://www.linkedin.com/in/anthonythomasmm",
+    github: "https://github.com/devt0nis",
+  },
+  {
+    id: "vini",
+    name: "Vinicius Costa",
+    role: "Dev Mobile Android",
+    photo: "/time/vinicius.jpg",
+    linkedin: "https://www.linkedin.com/in/vinicius-scosta/",
+    github: "https://github.com",
+  },
+  {
+    id: "marcelo",
+    name: "Marcelo Aggio",
+    role: "Desenvolvedor Backend",
+    photo: "/time/marcelo.jpeg",
+    linkedin: "https://www.linkedin.com/in/marceloaggiodev/",
+    github: "https://github.com",
+  },
+  {
+    id: "vitor",
+    name: "Vitor Lopes",
+    role: "Desenvolvedor Backend",
+    photo: "/time/vitor.jpg",
+    linkedin: "https://www.linkedin.com/in/vitorlopesrmo",
+    github: "https://github.com",
+  },
+
 ]
 
 export default function LandingPage() {
@@ -189,6 +222,40 @@ export default function LandingPage() {
                           {item.name}
                         </Link>
                       ))}
+                      <Link href="/login" className="text-center">
+                        <Button className="w-full bg-blue-600 text-white hover:opacity-90 rounded-full mt-2">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link href="/cadastro" className="text-center">
+                        <Button className="w-full bg-purple-600 text-white hover:opacity-90 rounded-full mt-2">
+                          Cadastro
+                        </Button>
+                      </Link>
+                      {/* Toggle de Modo Escuro no Menu Mobile */}
+                      <div className="flex justify-center mt-4">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={toggleDarkMode}
+                                className="rounded-full bg-slate-100 dark:bg-slate-800"
+                              >
+                                {darkMode ? (
+                                  <Sun className="h-5 w-5" />
+                                ) : (
+                                  <Moon className="h-5 w-5" />
+                                )}
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{darkMode ? "Modo claro" : "Modo escuro"}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
                     </nav>
                   </SheetContent>
                 </Sheet>
@@ -215,7 +282,11 @@ export default function LandingPage() {
                         onClick={toggleDarkMode}
                         className="rounded-full bg-slate-100 dark:bg-slate-800"
                       >
-                        {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                        {darkMode ? (
+                          <Sun className="h-5 w-5" />
+                        ) : (
+                          <Moon className="h-5 w-5" />
+                        )}
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -223,10 +294,15 @@ export default function LandingPage() {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Link href="/inicio">
-                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90 rounded-full">
-                  Começar Agora
-                </Button>
+                <Link href="/login">
+                  <Button className="bg-blue-600 text-white hover:opacity-90 rounded-full">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/cadastro">
+                  <Button className="bg-purple-600 text-white hover:opacity-90 rounded-full">
+                    Cadastro
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -234,25 +310,29 @@ export default function LandingPage() {
         </header>
 
         <main className="pt-20">
+          {/* Hero Section */}
           <section id="inicio" className="py-20 md:py-32">
             <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="inline-flex items-center rounded-full border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-900/20 px-4 py-1.5 mb-6">
                     <span className="text-sm font-medium text-purple-600 dark:text-purple-400">
-                      Análise com IA 
+                      Análise com IA
                     </span>
                   </div>
-                  <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                  Recupere o controle das suas{" "}
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-snug">
+                    Recupere o controle das suas{" "}
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
                       finanças
                     </span>{" "}
                     e sua{" "}
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">tranquilidade</span>
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                      tranquilidade
+                    </span>
                   </h1>
-                  <p className="text-xl mb-8 text-slate-600 dark:text-slate-300">
-                    Transforme sua vida financeira com o poder da IA. Análise personalizada, plano de ação para quitação de dividas e acompanhamento em tempo real.
+                  <p className="text-lg sm:text-xl mb-8 text-slate-600 dark:text-slate-300">
+                    Transforme sua vida financeira com o poder da IA. Análise personalizada, plano
+                    de ação para quitação de dívidas e acompanhamento em tempo real.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90 rounded-full h-12 px-8">
@@ -262,16 +342,15 @@ export default function LandingPage() {
                       Ver Demonstração
                     </Button>
                   </div>
-                  
                 </div>
                 <div className="md:w-1/2">
-                  <div className="relative">
+                  <div className="relative w-full h-64 sm:h-80 md:h-full">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <Image
                       src="/placeholder.svg?height=600&width=600"
                       alt="Quita.AI Dashboard"
-                      width={600}
-                      height={600}
+                      layout="fill"
+                      objectFit="cover"
                       className="relative rounded-lg shadow-2xl"
                     />
                   </div>
@@ -280,7 +359,10 @@ export default function LandingPage() {
             </div>
           </section>
 
-          <section id="recursos" className="py-20 bg-slate-50 dark:bg-slate-900/50">
+   
+
+          {/* Recursos */}
+          <section id="recursos" className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Recursos Poderosos</h2>
@@ -288,11 +370,16 @@ export default function LandingPage() {
                   Tecnologia de ponta para transformar sua saúde financeira
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {features.map((feature) => (
-                  <Card key={feature.id} className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
+                  <Card
+                    key={feature.id}
+                    className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
+                  >
                     <CardContent className="p-6">
-                      <div className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}>
+                      <div
+                        className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}
+                      >
                         <feature.icon className={`w-6 h-6 ${feature.color}`} />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -304,37 +391,73 @@ export default function LandingPage() {
             </div>
           </section>
 
-          <section id="depoimentos" className="py-20">
+  
+
+          {/* FAQ */}
+          <section id="faq" className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Histórias de Sucesso</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Perguntas Frequentes</h2>
                 <p className="text-lg text-slate-600 dark:text-slate-300">
-                  Veja como o Quita.AI está transformando vidas
+                  Respostas para as dúvidas mais comuns
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {testimonials.map((testimonial) => (
-                  <Card key={testimonial.id} className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
-                    <CardContent className="p-6">
-                      <div className="flex items-center mb-4">
-                        <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          width={48}
-                          height={48}
-                          className="rounded-full"
-                        />
-                        <div className="ml-4">
-                          <h3 className="font-semibold">{testimonial.name}</h3>
-                          <p className="text-sm text-slate-600 dark:text-slate-400">{testimonial.role}</p>
-                        </div>
+              <div className="max-w-3xl mx-auto">
+                <Accordion type="single" collapsible>
+                  {faqs.map((faq, index) => (
+                    <AccordionItem key={index} value={`faq-${index}`}>
+                      <AccordionTrigger className="text-left text-lg font-medium py-4">
+                        {faq.question}
+                        <ChevronDown className="ml-2 h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-4 text-slate-600 dark:text-slate-300">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </div>
+          </section>
+                 {/* Sobre Nós */}
+                 <section id="sobre" className="py-20 bg-slate-50 dark:bg-slate-900/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossa Equipe</h2>
+                <p className="text-lg text-slate-600 dark:text-slate-300">
+                  Conheça as pessoas por trás do Quita.AI
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                {teamMembers.map((member) => (
+                  <Card
+                    key={member.id}
+                    className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
+                  >
+                    <CardContent className="p-6 text-center">
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={150}
+                        height={150}
+                        className="mx-auto rounded-full mb-4"
+                      />
+                      <h3 className="text-xl font-semibold">{member.name}</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                        {member.role}
+                      </p>
+                      <div className="flex justify-center space-x-4">
+                        <Link href={member.linkedin} passHref target="_blank" rel="noopener noreferrer">
+                        
+                            <Linkedin className="w-6 h-6 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600" />
+                         
+                        </Link>
+                        <Link href={member.github} passHref target="_blank" rel="noopener noreferrer">
+                        
+                            <Github className="w-6 h-6 text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" />
+                        
+                        </Link>
                       </div>
-                      <div className="flex mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <p className="text-slate-600 dark:text-slate-300">{testimonial.comment}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -342,6 +465,7 @@ export default function LandingPage() {
             </div>
           </section>
 
+          {/* Contato */}
           <section id="contato" className="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
@@ -364,7 +488,7 @@ export default function LandingPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900"
+                          className="bg-white dark:bg-slate-900 w-full"
                         />
                       </div>
                       <div>
@@ -377,7 +501,7 @@ export default function LandingPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900"
+                          className="bg-white dark:bg-slate-900 w-full"
                         />
                       </div>
                       <div>
@@ -389,7 +513,7 @@ export default function LandingPage() {
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900"
+                          className="bg-white dark:bg-slate-900 w-full"
                         />
                       </div>
                       <Button
@@ -408,7 +532,7 @@ export default function LandingPage() {
 
         <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-12">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <Link href="/" className="inline-block mb-4">
                   <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
@@ -436,13 +560,22 @@ export default function LandingPage() {
               <div>
                 <h3 className="font-semibold mb-4">Legal</h3>
                 <nav className="flex flex-col space-y-2">
-                  <Link href="#" className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400">
+                  <Link
+                    href="#"
+                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                  >
                     Termos de Uso
                   </Link>
-                  <Link href="#" className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400">
+                  <Link
+                    href="#"
+                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                  >
                     Política de Privacidade
                   </Link>
-                  <Link href="#" className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400">
+                  <Link
+                    href="#"
+                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                  >
                     Cookies
                   </Link>
                 </nav>
@@ -450,18 +583,7 @@ export default function LandingPage() {
               <div>
                 <h3 className="font-semibold mb-4">Redes Sociais</h3>
                 <div className="flex space-x-4">
-                  <Link href="#" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400">
-                    <span className="sr-only">Twitter</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                    </svg>
-                  </Link>
-                  <Link href="#" className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400">
-                    <span className="sr-only">LinkedIn</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                  </Link>
+                  {/* Ícones das redes sociais */}
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -26,8 +26,6 @@ import {
   CreditCard,
   TrendingUp,
   TrendingDown,
-  Moon,
-  Sun,
   ChevronRight,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -50,8 +48,8 @@ const transactionTypes = [
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+ 
+  const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -61,9 +59,7 @@ export default function Sidebar() {
     return null;
   }
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+ 
 
   const lightModeStyles = {
     primaryGradientFrom: "#7c3aed",
@@ -146,16 +142,8 @@ export default function Sidebar() {
           )}
         </AnimatePresence>
         <div className="flex items-center space-x-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            style={{
-              color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary
-            }}
-          >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-          </Button>
+   
+
           <Button
             variant="ghost"
             size="icon"
@@ -176,10 +164,7 @@ export default function Sidebar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors"
-                style={{
-                  color: pathname === item.href ? theme === 'dark' ? darkModeStyles.highlightText : lightModeStyles.highlightText : theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary,
-                  backgroundColor: pathname === item.href ? theme === 'dark' ? darkModeStyles.highlightBackground : lightModeStyles.highlightBackground : 'transparent'
-                }}
+
               >
                 <item.icon size={20} />
                 {!collapsed && (
