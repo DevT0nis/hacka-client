@@ -1,12 +1,11 @@
 "use client"
-import { useState, useEffect } from "react";
-import Link from "next/link";
 
-import { useTheme } from "next-themes";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Select,
   SelectContent,
@@ -15,80 +14,38 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   LayoutDashboard,
-  PieChart,
   ArrowLeftRight,
-  Home,
   CalendarClock,
   PlusCircle,
   CreditCard,
   TrendingUp,
   TrendingDown,
   ChevronRight,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+  LogOut,
+  Home,
+  PieChart,
+} from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const menuItems = [
-  { name: "Início", icon: Home, href: "/inicio" },
-  { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-  { name: "Dívidas", icon: PieChart, href: "/dividas" },
-  { name: "Transações", icon: ArrowLeftRight, href: "/transacoes" },
-  { name: "Planejamento", icon: CalendarClock, href: "/planejamento" },
-];
+const menuItems = [ { name: "Início", icon: Home, href: "/inicio" }, { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" }, { name: "Dívidas", icon: PieChart, href: "/dividas" }, { name: "Transações", icon: ArrowLeftRight, href: "/transacoes" }, { name: "Planejamento", icon: CalendarClock, href: "/planejamento" }, ]; 
 
-const transactionTypes = [
-  { value: "transfer", label: "Transferência", icon: ArrowLeftRight },
-  { value: "income", label: "Receita", icon: TrendingUp },
-  { value: "expense", label: "Despesa", icon: TrendingDown },
-  { value: "card", label: "Despesa Cartão", icon: CreditCard },
-];
+const transactionTypes = [ { value: "transfer", label: "Transferência", icon: ArrowLeftRight }, { value: "income", label: "Receita", icon: TrendingUp }, { value: "expense", label: "Despesa", icon: TrendingDown }, { value: "card", label: "Despesa Cartão", icon: CreditCard }, ];
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
-  const [mounted, setMounted] = useState(false);
- 
-  const { theme } = useTheme();
+  const [collapsed, setCollapsed] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
-    return null;
+    return null
   }
-
- 
-
-  const lightModeStyles = {
-    primaryGradientFrom: "#7c3aed",
-    primaryGradientTo: "#3b82f6",
-    background: "#f8fafc",
-    textPrimary: "#0f172a",
-    textSecondary: "#64748b",
-    border: "#e2e8f0",
-    highlightBackground: "#faf5ff",
-    highlightText: "#7c3aed",
-    inputBackground: "#ffffff",
-    buttonBackground: "#7c3aed",
-    buttonHoverOpacity: "0.90"
-  };
-
-  const darkModeStyles = {
-    primaryGradientFrom: "#7c3aed",
-    primaryGradientTo: "#3b82f6",
-    backgroundFrom: "#0f172a",
-    backgroundTo: "#1e293b",
-    textPrimary: "#f8fafc",
-    textSecondary: "#94a3b8",
-    border: "#1e293b",
-    highlightBackground: "#4c1d95",
-    highlightText: "#7c3aed",
-    inputBackground: "#0f172a",
-    buttonBackground: "#7c3aed",
-    buttonHoverOpacity: "0.90"
-  };
 
   return (
     <motion.aside
@@ -98,19 +55,10 @@ export default function Sidebar() {
       className={cn(
         "flex flex-col h-screen",
         collapsed ? "w-20" : "w-64",
-        "overflow-hidden absolute z-10 fixed"
+        "overflow-hidden fixed z-10 bg-zinc-900 border-r border-zinc-800"
       )}
-      style={{
-        borderRight: `1px solid ${theme === 'dark' ? darkModeStyles.border : lightModeStyles.border}`,
-        background: theme === 'dark' ? `linear-gradient(to bottom, ${darkModeStyles.backgroundFrom}, ${darkModeStyles.backgroundTo})` : lightModeStyles.background
-      }}
     >
-      <div
-        className="flex items-center justify-between p-4"
-        style={{
-          borderBottom: `1px solid ${theme === 'dark' ? darkModeStyles.border : lightModeStyles.border}`,
-        }}
-      >
+      <div className="flex items-center justify-between p-4 border-b border-zinc-800">
         <AnimatePresence>
           {!collapsed && (
             <motion.div
@@ -120,41 +68,20 @@ export default function Sidebar() {
               transition={{ duration: 0.2 }}
             >
               <Link href="/" className="flex items-center space-x-2">
-                <div
-                  className="w-8 h-8 rounded-full"
-                  style={{
-                    background: `linear-gradient(to bottom right, ${theme === 'dark' ? darkModeStyles.primaryGradientFrom : lightModeStyles.primaryGradientFrom}, ${theme === 'dark' ? darkModeStyles.primaryGradientTo : lightModeStyles.primaryGradientTo})`,
-                  }}
-                />
-                <span
-                  className="text-xl font-bold"
-                  style={{
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                    backgroundImage: `linear-gradient(to right, ${theme === 'dark' ? darkModeStyles.primaryGradientFrom : lightModeStyles.primaryGradientFrom}, ${theme === 'dark' ? darkModeStyles.primaryGradientTo : lightModeStyles.primaryGradientTo})`,
-                  }}
-                >
-                  Quita.AI
-                </span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600" />
+                <span className="text-xl font-bold text-white">Quita.AI</span>
               </Link>
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="flex items-center space-x-1">
-   
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary
-            }}
-          >
-            <ChevronRight size={20} className={cn("transition-transform", collapsed ? "rotate-180" : "")} />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setCollapsed(!collapsed)}
+          className="text-zinc-400 hover:text-white hover:bg-zinc-800"
+        >
+          <ChevronRight size={20} className={cn("transition-transform", collapsed ? "rotate-180" : "")} />
+        </Button>
       </div>
       <ScrollArea className="flex-grow">
         <nav className="p-2 space-y-1">
@@ -163,8 +90,7 @@ export default function Sidebar() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors"
-
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-zinc-400 hover:text-white hover:bg-zinc-800"
               >
                 <item.icon size={20} />
                 {!collapsed && (
@@ -185,37 +111,21 @@ export default function Sidebar() {
         <div className="p-2">
           <Select>
             <SelectTrigger
-              className="w-full px-3 py-2"
-              style={{
-                backgroundColor: theme === 'dark' ? darkModeStyles.inputBackground : lightModeStyles.inputBackground,
-                color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary,
-                borderColor: theme === 'dark' ? darkModeStyles.border : lightModeStyles.border,
-              }}
+              className="w-full px-3 py-2 bg-zinc-800 text-zinc-300 border-zinc-700"
             >
               {collapsed ? (
                 <PlusCircle size={20} />
               ) : (
-                <SelectValue placeholder="Adicionar" />
+                <SelectValue placeholder="Nova Transação" />
               )}
             </SelectTrigger>
-            <SelectContent
-              className="bg-popover"
-              style={{
-                backgroundColor: theme === 'dark' ? darkModeStyles.backgroundFrom : lightModeStyles.background,
-                borderColor: theme === 'dark' ? darkModeStyles.border : lightModeStyles.border,
-              }}
-            >
+            <SelectContent className="bg-zinc-900 border-zinc-800">
               <SelectGroup>
-                <SelectLabel
-                  className="text-muted-foreground"
-                  style={{
-                    color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary,
-                  }}
-                >
+                <SelectLabel className="text-zinc-500">
                   Adicionar Transação
                 </SelectLabel>
                 {transactionTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value}>
+                  <SelectItem key={type.value} value={type.value} className="text-zinc-300">
                     <div className="flex items-center space-x-2">
                       <type.icon size={18} />
                       <span>{type.label}</span>
@@ -234,24 +144,27 @@ export default function Sidebar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="p-4"
-            style={{
-              borderTop: `1px solid ${theme === 'dark' ? darkModeStyles.border : lightModeStyles.border}`,
-            }}
+            className="p-4 border-t border-zinc-800"
           >
             <div className="flex items-center space-x-3">
               <Avatar>
-                <AvatarImage src="/placeholder-user.jpg" alt="Usuário" />
-                <AvatarFallback style={{ backgroundColor: theme === 'dark' ? darkModeStyles.highlightBackground : lightModeStyles.highlightBackground, color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary }}>JS</AvatarFallback>
+                <AvatarImage src="/time/marcelo.jpeg" alt="Carlos" />
+                <AvatarFallback className="bg-zinc-800 text-zinc-300">CO</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium" style={{ color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary }}>Anthony Thomas</p>
-                <p className="text-xs" style={{ color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary }}>anthonythomascloud@gmail.com</p>
+                <p className="text-sm font-medium text-zinc-300">Marcelo Aggio</p>
+                <p className="text-xs text-zinc-500">marceloaggio@yahoo.com</p>
               </div>
             </div>
+            <Button variant="ghost" className="w-full mt-2 text-zinc-400 hover:text-white hover:bg-zinc-800">
+              <LogOut size={16} className="mr-2" />
+              <Link href="/">
+              Sair
+              </Link>
+            </Button>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.aside>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Send, MessageCircle } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,6 +20,8 @@ export default function ChatPage() {
   const [chatHistory, setChatHistory] = useState<Mensagem[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   const formatarHora = () => {
     return new Date().toLocaleTimeString('pt-BR', { 
@@ -78,6 +80,14 @@ export default function ChatPage() {
     }
   }
 
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      setTimeout(() => {
+        scrollAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 100);
+    }
+  }, [chatHistory])
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
@@ -92,33 +102,30 @@ export default function ChatPage() {
       <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0">
         <Card className="h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold">Chat Assistente</CardTitle>
-
+            <CardTitle className="text-2xl font-bold">Assistente de finanças</CardTitle>
           </CardHeader>
-          <CardContent className="flex-grow flex flex-col pt-4">
-            <ScrollArea className="flex-grow pr-4 mb-4">
-              {chatHistory.length === 0 ? (
-                <div className="text-center text-muted-foreground py-8">
-                  Comece uma conversa enviando uma mensagem...
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {chatHistory.map((msg, index) => (
+          <CardContent className="flex-grow flex flex-col pt-4 overflow-auto">
+            <ScrollArea className="flex-grow pr-4 mb-4" ref={scrollAreaRef}>
+              <div ref={scrollAreaRef}>
+              <div className="space-y-4">
+                {chatHistory.length === 0 ? (
+                  <div className="text-center text-muted-foreground py-8">
+                    Comece uma conversa enviando uma mensagem...
+                  </div>
+                ) : (
+                  chatHistory.map((msg, index) => (
                     <div
                       key={index}
                       className={`flex items-start gap-3 ${
-                        msg.role === 'user' ? 'flex-row-reverse' : ''
+                        msg.role === 'user' ? 'justify-end' : 'justify-start'
                       }`}
                     >
-                      <Avatar className="mt-1">
-                        <AvatarImage 
-                          src={msg.role === 'user' ? '/user-avatar.png' : '/bot-avatar.png'} 
-                          alt={msg.role === 'user' ? 'Usuário' : 'Assistente'} 
-                        />
-                        <AvatarFallback>
-                          {msg.role === 'user' ? 'U' : 'A'}
-                        </AvatarFallback>
-                      </Avatar>
+                      {msg.role === 'assistant' && (
+                        <Avatar>
+                          <AvatarImage src="/bot-avatar.png" alt="Assistente" />
+                          <AvatarFallback>A</AvatarFallback>
+                        </Avatar>
+                      )}
                       <div
                         className={`rounded-lg px-4 py-2 max-w-[80%] ${
                           msg.role === 'user'
@@ -131,10 +138,17 @@ export default function ChatPage() {
                           {msg.timestamp}
                         </span>
                       </div>
+                      {msg.role === 'user' && (
+                        <Avatar>
+                          <AvatarImage src="/user-avatar.png" alt="Usuário" />
+                          <AvatarFallback>U</AvatarFallback>
+                        </Avatar>
+                      )}
                     </div>
-                  ))}
-                </div>
-              )}
+                  ))
+                )}
+              </div>
+              </div>
             </ScrollArea>
             <form onSubmit={enviarMensagem} className="flex gap-2">
               <Textarea
@@ -143,7 +157,7 @@ export default function ChatPage() {
                 placeholder="Digite sua mensagem..."
                 className="min-h-[60px] resize-none"
               />
-              <Button type="submit" disabled={isLoading || !userInput.trim()}>
+              <Button type="submit" size="icon" disabled={isLoading || !userInput.trim()}>
                 {isLoading ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
                 ) : (

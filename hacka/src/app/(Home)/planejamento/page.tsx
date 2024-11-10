@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -25,21 +25,26 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CheckCircle } from "lucide-react"
 
+// Esquema de validação com Zod
 const debtSchema = z.object({
-  valor: z.string(),
-  prazo: z.string(),
-  taxaJuros: z.string(),
+  valor: z.string().nonempty("Valor é obrigatório"),
+  prazo: z.string()
+    .nonempty("Prazo é obrigatório")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Prazo deve estar no formato yyyy-MM-dd"),
+  taxaJuros: z.string().nonempty("Taxa de juros é obrigatória"),
 })
 
 const formSchema = z.object({
-  dividas: z.array(debtSchema),
-  rendaMensal: z.string(),
-  gastosFixes: z.string(),
-  gastosVariaveis: z.string(),
-  objetivoPagamento: z.string(),
-  prazoPagamento: z.string(),
+  dividas: z.array(debtSchema).min(1, "Pelo menos uma dívida deve ser adicionada"),
+  rendaMensal: z.string().nonempty("Renda mensal é obrigatória"),
+  gastosFixes: z.string().nonempty("Gastos fixos são obrigatórios"),
+  gastosVariaveis: z.string().nonempty("Gastos variáveis são obrigatórios"),
+  objetivoPagamento: z.string().nonempty("Objetivo de pagamento é obrigatório"),
+  prazoPagamento: z.string()
+    .nonempty("Prazo de pagamento é obrigatório")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Prazo de pagamento deve estar no formato yyyy-MM-dd"),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -47,13 +52,13 @@ type FormData = z.infer<typeof formSchema>
 export default function Component() {
   const [step, setStep] = useState(0)
   const [open, setOpen] = useState(false)
-  const [debts, setDebts] = useState<Array<{ valor: string; prazo: string; taxaJuros: string }>>([])
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      dividas: [],
+      dividas: [{ valor: '', prazo: '', taxaJuros: '' }],
       rendaMensal: '',
       gastosFixes: '',
       gastosVariaveis: '',
@@ -62,7 +67,15 @@ export default function Component() {
     },
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'dividas',
+  })
+
+  // Comentada a função de submissão original
+  /*
   const onSubmit = async (data: FormData) => {
+    console.log("Dados do formulário:", data) // Log para depuração
     try {
       const response = await fetch('/api/agent_planejador', {
         method: 'POST',
@@ -73,21 +86,33 @@ export default function Component() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to submit form')
+        const errorData = await response.json()
+        throw new Error(errorData.erro || 'Falha ao enviar o formulário')
       }
 
       const result = await response.json()
       console.log('Success:', result)
-      setOpen(false)
+      setSuccess(true)
+      setStep(4) // Move to the confirmation step
       setError(null)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error)
-      setError('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.')
+      setError(error.message || 'Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.')
+      setSuccess(false)
     }
+  }
+  */
+
+  // Nova função para simular o submit e avançar para o passo de sucesso
+  const handleFinalizar = () => {
+    // Ignora a lógica de submissão e define o estado de sucesso
+    setSuccess(true)
+    setStep(4) // Move para a etapa de confirmação
+    setError(null)
   }
 
   const addDebt = () => {
-    setDebts([...debts, { valor: '', prazo: '', taxaJuros: '' }])
+    append({ valor: '', prazo: '', taxaJuros: '' })
   }
 
   const startPlanning = () => {
@@ -121,8 +146,8 @@ export default function Component() {
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
-              {debts.map((_, index) => (
-                <div key={index} className="space-y-2">
+              {fields.map((field, index) => (
+                <div key={field.id} className="space-y-2">
                   <FormField
                     control={form.control}
                     name={`dividas.${index}.valor`}
@@ -139,15 +164,18 @@ export default function Component() {
                   <FormField
                     control={form.control}
                     name={`dividas.${index}.prazo`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Prazo</FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    render={({ field }) => {
+                      console.log(`Valor do prazo da dívida ${index + 1}:`, field.value) // Log
+                      return (
+                        <FormItem>
+                          <FormLabel>Prazo</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )
+                    }}
                   />
                   <FormField
                     control={form.control}
@@ -162,6 +190,9 @@ export default function Component() {
                       </FormItem>
                     )}
                   />
+                  <Button type="button" variant="destructive" onClick={() => remove(index)}>
+                    Remover Dívida
+                  </Button>
                 </div>
               ))}
               <Button type="button" variant="outline" onClick={addDebt}>
@@ -262,24 +293,61 @@ export default function Component() {
               <FormField
                 control={form.control}
                 name="prazoPagamento"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Prazo Desejado</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                render={({ field }) => {
+                  console.log("Valor do prazoPagamento:", field.value) // Log
+                  return (
+                    <FormItem>
+                      <FormLabel>Prazo Desejado</FormLabel>
+                      <FormControl>
+                        <Input type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )
+                }}
               />
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setStep(2)}>
                 Anterior
               </Button>
-              <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+              {/* Alterado o tipo e a função para ignorar o submit */}
+              <Button type="button" onClick={handleFinalizar}>
                 Finalizar
               </Button>
+            </DialogFooter>
+          </DialogContent>
+        )
+      case 4:
+        return (
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Confirmação</DialogTitle>
+              <DialogDescription>
+                {success ? 'Seu plano de acesso foi criado com sucesso!' : 'Houve um problema ao criar seu plano de acesso.'}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              {success ? (
+                <Alert>
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertTitle>Sucesso</AlertTitle>
+                  <AlertDescription>
+                    Seu plano de acesso foi criado com sucesso. Por favor, verifique o plano de ação na aba de dashboard.
+                  </AlertDescription>
+                </Alert>
+              ) : (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Erro</AlertTitle>
+                  <AlertDescription>
+                    Houve um problema ao criar seu plano de acesso. Por favor, tente novamente mais tarde.
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
+            <DialogFooter>
+              <Button onClick={() => setOpen(false)}>Fechar</Button>
             </DialogFooter>
           </DialogContent>
         )
@@ -291,7 +359,7 @@ export default function Component() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className=''>Iniciar Planejamento Financeiro</Button>
+        <Button>Iniciar Planejamento Financeiro</Button>
       </DialogTrigger>
       <Form {...form}>
         <form className="space-y-8">
