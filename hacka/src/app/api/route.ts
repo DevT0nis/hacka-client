@@ -49,13 +49,21 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ reply: resposta }, { status: 200 })
-  } catch (erro) {
+  } catch (erro: unknown) {
     console.error('Erro na API de chat:', erro)
+    
+    // Verificação do tipo de erro
+    let errorMessage: string;
+    if (erro instanceof Error) {
+      errorMessage = erro.message;
+    } else {
+      errorMessage = 'Ocorreu um erro desconhecido.';
+    }
     
     return NextResponse.json(
       { 
         error: 'Desculpe, não foi possível processar sua mensagem no momento. Por favor, tente novamente.',
-        details: process.env.NODE_ENV === 'development' ? erro.message : undefined
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
       }, 
       { status: 500 }
     )

@@ -186,10 +186,16 @@ export async function POST(request: NextRequest) {
     await fs.writeFile(caminhoArquivo, JSON.stringify({ dadosUsuario: dados, planoGeradoPelaIA: planoFinanceiro }, null, 2))
 
     return NextResponse.json({ ...planoFinanceiro, nomeArquivo })
-  } catch (erro) {
+  } catch (erro: unknown) {
     console.error('Erro:', erro);
+    let errorMessage: string;
+    if (erro instanceof Error) {
+      errorMessage = erro.message;
+    } else {
+      errorMessage = 'An unknown error occurred.';
+    }
     return NextResponse.json(
-      { erro: 'Falha ao processar o plano financeiro', detalhes: erro.message },
+      { erro: 'Falha ao processar o plano financeiro', detalhes: errorMessage  },
       { status: 500 }
     );
   }
