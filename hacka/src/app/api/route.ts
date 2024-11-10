@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body: RequestBody = await request.json()
-    const { message, messages } = body
+    const { messages } = body
 
     const chatHistory: Mensagem[] = [
       {

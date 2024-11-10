@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { CreditCard, Banknote, Users, Scissors, Utensils, Car, Briefcase, Package, GraduationCap, PiggyBank, TrendingUp, Target, Trophy, Star } from "lucide-react"
+import { CreditCard, Banknote, Users, Scissors, Utensils, Car, Briefcase, Package, GraduationCap, PiggyBank,  Target, Trophy, Star } from "lucide-react"
 
 const Dashboard = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
