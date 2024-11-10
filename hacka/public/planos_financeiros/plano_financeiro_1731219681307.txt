@@ -1,0 +1,20 @@
+{
+  "dadosUsuario": {
+    "dividas": [
+      {
+        "valor": "3300",
+        "prazo": "2001-05-30",
+        "taxaJuros": "3"
+      }
+    ],
+    "rendaMensal": "4000",
+    "gastosFixes": "2000",
+    "gastosVariaveis": "1000",
+    "objetivoPagamento": "1000",
+    "prazoPagamento": "2027-05-30"
+  },
+  "planoGeradoPelaIA": {
+    "erro": "Falha ao analisar resposta da IA",
+    "conteudoBruto": "Plano de Ação para Quitação de Dívidas e Melhoria da Situação Financeira:\n\n```json\n{\n  \"prioridades_de_pagamento\": [\n    {\n      \"tipo_divida\": \"Dívida com taxa de juros de 3% ao mês\",\n      \"valor\": 3300.0,\n      \"justificativa\": \"Devido à alta taxa de juros, é fundamental priorizar a quitação dessa dívida para evitar acúmulo de juros e minimizar o valor total pago.\"\n    }\n  ],\n  \"cortes_de_despesas_sugeridos\": [\n    {\n      \"categoria\": \"Despesas variáveis\",\n      \"valor_sugerido\": 200.0,\n      \"justificativa\": \"Redução das despesas variáveis pode ser alcançada pela redução de gastos não essenciais, como restaurantes e entretenimento, permitindo a alocação de mais recursos para o pagamento de dívidas.\"\n    },\n    {\n      \"categoria\": \"Despesas fixas\",\n      \"valor_sugerido\": 100.0,\n      \"justificativa\": \"A revisão e renegociação de contratos de serviços essenciais, como telefone e internet, pode resultar em economias mensais que podem ser utilizadas para o pagamento de dívidas.\"\n    }\n  ],\n  \"estrategias_para_aumentar_pagamento_mensal\": [\n    {\n      \"estrategia\": \"Venda de itens não essenciais\",\n      \"descricao\": \"Venda de itens que não são mais necessários ou utilizados para gerar recursos adicionais que podem ser aplicados no pagamento de dívidas.\",\n      \"potencial_aumento\": 500.0\n    },\n    {\n      \"estrategia\": \"Redução de gastos com comodidades\",\n      \"descricao\": \"Redução de gastos com serviços como cozinha, lavanderia e outros serviços que podem ser substituídos por alternativas mais acessíveis.\",\n      \"potencial_aumento\": 200.0\n    }\n  ],\n  \"recomendacoes_renegociacao\": [\n    {\n      \"tipo_de_divida\": \"Dívida com taxa de juros de 3% ao mês\",\n      \"recomendacao\": \"A renegociação com o credor pode resultar em redução da taxa de juros e/ou do prazo de pagamento, permitindo uma quitação mais rápida e econômica.\",\n      \"economia_potencial\": 10.0\n    }\n  ],\n  \"dicas_de_controle_financeiro\": [\n    \"Registre todas as despesas e receitas para ter um controle preciso de suas finanças.\",\n    \"Estabeleça metas de curto e longo prazo para manter o foco no pagamento das dívidas.\",\n    \"Evite gastos impulsivos e não essenciais.\",\n    \"Aproveite oportunidades de economia e negociação com credores.\"\n  ],\n  \"estimativa_de_tempo_para_quitar_dividas\": {\n    \"cenario_otimista\": \"12 meses\",\n    \"cenario_realista\": \"18 meses\",\n    \"cenario_pessimista\": \"24 meses\"\n  },\n  \"proximos_passos\": [\n    {\n      \"acao\": \"Revisar e renegociar contratos de serviços essenciais.\",\n      \"prazo\": \"Imediato\",\n      \"impacto_esperado\": \"Economia de R$ 100,00 mensal.\"\n    },\n    {\n      \"acao\": \"Identificar e vender itens não essenciais.\",\n      \"prazo\": \"2 semanas\",\n      \"impacto_esperado\": \"Geração de R$ 500,00 adicionais para o pagamento de dívidas.\"\n    },\n    {\n      \"acao\": \"Começar a aplicar as estratégias de redução de gastos e aumento de pagamento mensal.\",\n      \"prazo\": \"Imediato\",\n      \"impacto_esperado\": \"Incremento gradual no pagamento mensal das dívidas.\"\n    }\n  ]\n}\n```\n\nLembre-se de que a disciplina e a perseverança são fundamentais para alcançar os objetivos de quitação de dívidas e melhoria da situação financeira. Mantenha-se motivado e comprometido com o plano, e não hesite em procurar ajuda adicional se necessário."
+  }
+}
