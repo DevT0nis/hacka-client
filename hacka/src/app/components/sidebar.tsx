@@ -245,8 +245,8 @@ export default function Sidebar() {
                 <AvatarFallback style={{ backgroundColor: theme === 'dark' ? darkModeStyles.highlightBackground : lightModeStyles.highlightBackground, color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary }}>JS</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium" style={{ color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary }}>João Silva</p>
-                <p className="text-xs" style={{ color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary }}>joao@exemplo.com</p>
+                <p className="text-sm font-medium" style={{ color: theme === 'dark' ? darkModeStyles.textPrimary : lightModeStyles.textPrimary }}>Anthony Thomas</p>
+                <p className="text-xs" style={{ color: theme === 'dark' ? darkModeStyles.textSecondary : lightModeStyles.textSecondary }}>anthonythomascloud@gmail.com</p>
               </div>
             </div>
           </motion.div>
