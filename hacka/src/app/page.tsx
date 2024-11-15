@@ -18,7 +18,6 @@ import {
   Menu,
   PieChart,
   Shield,
-  ChevronDown,
   Github,
   Linkedin,
   CheckCircle,
