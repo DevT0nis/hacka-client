@@ -88,7 +88,7 @@ Seguindo esses passos, você estará no caminho certo para restabelecer sua saú
     const completion = await client.chat.completions.create({
       model: 'llama3-70b-8192',
       messages: chatHistory,
-      max_tokens: 500, // Aumentei para 500 para respostas mais completas
+      max_tokens: 500, 
       temperature: 0.7,
       top_p: 0.9,
       stream: false
@@ -104,7 +104,7 @@ Seguindo esses passos, você estará no caminho certo para restabelecer sua saú
   } catch (erro: unknown) {
     console.error('Erro na API de chat:', erro)
     
-    // Verificação do tipo de erro
+
     let errorMessage: string;
     if (erro instanceof Error) {
       errorMessage = erro.message;

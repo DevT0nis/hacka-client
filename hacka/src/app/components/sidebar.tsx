@@ -15,36 +15,110 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  LayoutDashboard,
-  ArrowLeftRight,
-  CalendarClock,
-  PlusCircle,
-  CreditCard,
-  TrendingUp,
-  TrendingDown,
-  ChevronRight,
-  LogOut,
-  Home,
-  PieChart,
-} from "lucide-react"
+import { LayoutDashboard, ArrowLeftRight, CalendarClock, PlusCircle, CreditCard, TrendingUp, TrendingDown, ChevronRight, LogOut, Home, PieChart, Sun, Moon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useTheme } from "next-themes"
 
-const menuItems = [ { name: "Início", icon: Home, href: "/inicio" }, { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" }, { name: "Dívidas", icon: PieChart, href: "/dividas" }, { name: "Transações", icon: ArrowLeftRight, href: "/transacoes" }, { name: "Planejamento", icon: CalendarClock, href: "/planejamento" }, ]; 
+const menuItems = [
+  { name: "Início", icon: Home, href: "/inicio" },
+  { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+  { name: "Dívidas", icon: PieChart, href: "/dividas" },
+  { name: "Transações", icon: ArrowLeftRight, href: "/transacoes" },
+  { name: "Planejamento", icon: CalendarClock, href: "/planejamento" },
+]
 
-const transactionTypes = [ { value: "transfer", label: "Transferência", icon: ArrowLeftRight }, { value: "income", label: "Receita", icon: TrendingUp }, { value: "expense", label: "Despesa", icon: TrendingDown }, { value: "card", label: "Despesa Cartão", icon: CreditCard }, ];
+const mobileMenuItems = [
+  { name: "Início", icon: Home, href: "/inicio" },
+  { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+  { name: "Dívidas", icon: PieChart, href: "/dividas" },
+  { name: "Transações", icon: ArrowLeftRight, href: "/transacoes" },
+]
+
+const transactionTypes = [
+  { value: "transfer", label: "Transferência", icon: ArrowLeftRight },
+  { value: "income", label: "Receita", icon: TrendingUp },
+  { value: "expense", label: "Despesa", icon: TrendingDown },
+  { value: "card", label: "Despesa Cartão", icon: CreditCard },
+]
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
-
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+      setCollapsed(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'visible'
+    }
   }, [])
 
   if (!mounted) {
     return null
+  }
+
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed)
+  }
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  const isDarkMode = theme === 'dark'
+
+  if (isMobile) {
+    return (
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        className={cn(
+          "fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg",
+          isDarkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"
+        )}
+      >
+        <nav className="flex items-center justify-around h-16 px-4">
+          {mobileMenuItems.map((item, index) => (
+            <Link key={item.name} href={item.href}>
+              <div className="flex flex-col items-center gap-1">
+                <item.icon
+                  size={24}
+                  className={cn(
+                    "transition-colors",
+                    index === 0 ? "text-orange-600" : isDarkMode ? "text-zinc-400" : "text-zinc-600"
+                  )}
+                />
+                <span
+                  className={cn(
+                    "text-xs",
+                    index === 0 ? "text-orange-600" : isDarkMode ? "text-zinc-400" : "text-zinc-600"
+                  )}
+                >
+                  {item.name}
+                </span>
+              </div>
+            </Link>
+          ))}
+          <button className="relative -top-6" aria-label="Adicionar nova transação">
+            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-orange-600 text-white shadow-lg">
+              <PlusCircle size={24} />
+            </div>
+          </button>
+        </nav>
+      </motion.div>
+    )
   }
 
   return (
@@ -53,12 +127,14 @@ export default function Sidebar() {
       animate={{ width: collapsed ? 80 : 256 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "flex flex-col h-screen",
-        collapsed ? "w-20" : "w-64",
-        "overflow-hidden fixed z-10 bg-zinc-900 border-r border-zinc-800"
+        "flex flex-col overflow-hidden fixed z-10 top-0 left-0 h-screen border-r",
+        isDarkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"
       )}
     >
-      <div className="flex items-center justify-between p-4 border-b border-zinc-800">
+      <div className={cn(
+        "flex items-center justify-between p-4 border-b",
+        isDarkMode ? "border-zinc-800" : "border-zinc-200"
+      )}>
         <AnimatePresence>
           {!collapsed && (
             <motion.div
@@ -68,8 +144,11 @@ export default function Sidebar() {
               transition={{ duration: 0.2 }}
             >
               <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600" />
-                <span className="text-xl font-bold text-white">Quita.AI</span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600" />
+                <span className={cn(
+                  "text-xl font-bold",
+                  isDarkMode ? "text-white" : "text-zinc-900"
+                )}>Quita.AI</span>
               </Link>
             </motion.div>
           )}
@@ -77,10 +156,17 @@ export default function Sidebar() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setCollapsed(!collapsed)}
-          className="text-zinc-400 hover:text-white hover:bg-zinc-800"
+          onClick={toggleSidebar}
+          className={cn(
+            "hover:bg-zinc-100",
+            isDarkMode ? "text-zinc-400 hover:text-white hover:bg-zinc-800" : "text-zinc-600 hover:text-zinc-900"
+          )}
+          aria-label={collapsed ? "Expandir sidebar" : "Recolher sidebar"}
         >
-          <ChevronRight size={20} className={cn("transition-transform", collapsed ? "rotate-180" : "")} />
+          <ChevronRight
+            size={20}
+            className={cn("transition-transform", collapsed ? "rotate-180" : "")}
+          />
         </Button>
       </div>
       <ScrollArea className="flex-grow">
@@ -90,7 +176,12 @@ export default function Sidebar() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-zinc-400 hover:text-white hover:bg-zinc-800"
+                className={cn(
+                  "flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors",
+                  isDarkMode
+                    ? "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+                )}
               >
                 <item.icon size={20} />
                 {!collapsed && (
@@ -109,23 +200,57 @@ export default function Sidebar() {
           ))}
         </nav>
         <div className="p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleTheme}
+            className={cn(
+              "w-full justify-start",
+              isDarkMode
+                ? "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+            )}
+          >
+            {isDarkMode ? (
+              <>
+                <Sun size={20} className="mr-2" />
+                {!collapsed && <span>Modo Claro</span>}
+              </>
+            ) : (
+              <>
+                <Moon size={20} className="mr-2" />
+                {!collapsed && <span>Modo Escuro</span>}
+              </>
+            )}
+          </Button>
+        </div>
+        <div className="p-2">
           <Select>
-            <SelectTrigger
-              className="w-full px-3 py-2 bg-zinc-800 text-zinc-300 border-zinc-700"
-            >
+            <SelectTrigger className={cn(
+              "w-full px-3 py-2",
+              isDarkMode
+                ? "bg-zinc-800 text-zinc-300 border-zinc-700"
+                : "bg-zinc-100 text-zinc-700 border-zinc-200"
+            )}>
               {collapsed ? (
                 <PlusCircle size={20} />
               ) : (
                 <SelectValue placeholder="Nova Transação" />
               )}
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800">
+            <SelectContent className={cn(
+              isDarkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"
+            )}>
               <SelectGroup>
-                <SelectLabel className="text-zinc-500">
+                <SelectLabel className={isDarkMode ? "text-zinc-500" : "text-zinc-700"}>
                   Adicionar Transação
                 </SelectLabel>
                 {transactionTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value} className="text-zinc-300">
+                  <SelectItem
+                    key={type.value}
+                    value={type.value}
+                    className={isDarkMode ? "text-zinc-300" : "text-zinc-700"}
+                  >
                     <div className="flex items-center space-x-2">
                       <type.icon size={18} />
                       <span>{type.label}</span>
@@ -144,23 +269,42 @@ export default function Sidebar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="p-4 border-t border-zinc-800"
+            className={cn(
+              "p-4 border-t",
+              isDarkMode ? "border-zinc-800" : "border-zinc-200"
+            )}
           >
             <div className="flex items-center space-x-3">
               <Avatar>
-                <AvatarImage src="/time/marcelo.jpeg" alt="Carlos" />
-                <AvatarFallback className="bg-zinc-800 text-zinc-300">CO</AvatarFallback>
+                <AvatarImage src="/time/marcelo.jpeg" alt="Marcelo" />
+                <AvatarFallback className={cn(
+                  isDarkMode ? "bg-zinc-800 text-zinc-300" : "bg-zinc-200 text-zinc-700"
+                )}>
+                  MA
+                </AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium text-zinc-300">Marcelo Aggio</p>
-                <p className="text-xs text-zinc-500">marceloaggio@yahoo.com</p>
+                <p className={cn(
+                  "text-sm font-medium",
+                  isDarkMode ? "text-zinc-300" : "text-zinc-700"
+                )}>Marcelo Aggio</p>
+                <p className={cn(
+                  "text-xs",
+                  isDarkMode ? "text-zinc-500" : "text-zinc-600"
+                )}>marceloaggio@yahoo.com</p>
               </div>
             </div>
-            <Button variant="ghost" className="w-full mt-2 text-zinc-400 hover:text-white hover:bg-zinc-800">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full mt-2",
+                isDarkMode
+                  ? "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                  : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+              )}
+            >
               <LogOut size={16} className="mr-2" />
-              <Link href="/">
-              Sair
-              </Link>
+              <Link href="/">Sair</Link>
             </Button>
           </motion.div>
         )}
