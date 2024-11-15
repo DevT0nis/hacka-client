@@ -21,6 +21,8 @@ import {
   ChevronDown,
   Github,
   Linkedin,
+  CheckCircle,
+  DollarSign,
 } from "lucide-react"
 import {
   Sheet,
@@ -57,52 +59,38 @@ const features = [
     icon: Zap,
     title: "Plano de Ação Personalizado",
     description: "IA cria um plano individual com passos específicos para sair da inadimplência.",
-    color: "text-purple-500",
-    bgColor: "bg-purple-100 dark:bg-purple-900/20",
   },
   {
     id: "insights",
     icon: PieChart,
     title: "Insights Financeiros",
     description: "Análise detalhada de gastos por categoria com recomendações inteligentes de economia.",
-    color: "text-blue-500",
-    bgColor: "bg-blue-100 dark:bg-blue-900/20",
   },
   {
     id: "previsao",
     icon: BarChart,
     title: "Previsão Financeira",
     description: "Projeções precisas do tempo necessário para recuperação financeira.",
-    color: "text-green-500",
-    bgColor: "bg-green-100 dark:bg-green-900/20",
   },
   {
     id: "educacao",
     icon: Book,
     title: "Educação Financeira",
     description: "Conteúdo personalizado para desenvolver hábitos financeiros saudáveis.",
-    color: "text-yellow-500",
-    bgColor: "bg-yellow-100 dark:bg-yellow-900/20",
   },
   {
     id: "seguranca",
     icon: Shield,
     title: "Segurança Total",
     description: "Proteção de dados e privacidade com criptografia de ponta a ponta.",
-    color: "text-red-500",
-    bgColor: "bg-red-100 dark:bg-red-900/20",
   },
   {
     id: "inteligencia",
     icon: Star,
     title: "IA Avançada",
     description: "Algoritmos de última geração para análise e recomendações personalizadas.",
-    color: "text-indigo-500",
-    bgColor: "bg-indigo-100 dark:bg-indigo-900/20",
   },
 ]
-
-
 
 const faqs = [
   {
@@ -120,7 +108,18 @@ const faqs = [
     answer:
       "Oferecemos uma versão gratuita com recursos limitados e planos premium com funcionalidades avançadas.",
   },
+  {
+    question: "Quanto tempo leva para ver resultados?",
+    answer:
+      "O tempo varia de acordo com sua situação financeira, mas muitos usuários começam a ver melhorias em suas finanças em 3 a 6 meses de uso consistente.",
+  },
+  {
+    question: "Posso usar o Quita.AI se estiver desempregado?",
+    answer:
+      "Sim, o Quita.AI pode ajudar a gerenciar suas finanças e encontrar oportunidades de economia, independentemente da sua situação de emprego.",
+  },
 ]
+
 const teamMembers = [
   {
     id: "anthony",
@@ -154,7 +153,30 @@ const teamMembers = [
     linkedin: "https://www.linkedin.com/in/vitorlopesrmo",
     github: "https://github.com",
   },
+]
 
+const testimonials = [
+  {
+    id: 1,
+    name: "Maria Silva",
+    role: "Professora",
+    content: "O Quita.AI mudou minha vida financeira. Em 6 meses, consegui quitar todas as minhas dívidas e agora estou economizando para realizar meu sonho de viajar para a Europa.",
+    avatar: "/avatars/maria.jpg",
+  },
+  {
+    id: 2,
+    name: "João Santos",
+    role: "Empreendedor",
+    content: "Como dono de pequeno negócio, sempre tive dificuldades em gerenciar minhas finanças pessoais e profissionais. O Quita.AI me ajudou a organizar tudo e agora meu negócio está crescendo de forma sustentável.",
+    avatar: "/avatars/joao.jpg",
+  },
+  {
+    id: 3,
+    name: "Ana Oliveira",
+    role: "Estudante",
+    content: "Nunca pensei que conseguiria pagar meu empréstimo estudantil tão rápido! Com as dicas e o planejamento do Quita.AI, estou no caminho certo para um futuro financeiro estável.",
+    avatar: "/avatars/ana.jpg",
+  },
 ]
 
 export default function LandingPage() {
@@ -179,7 +201,7 @@ export default function LandingPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", { name, email, message })
+    console.log("Formulário enviado:", { name, email, message })
     setName("")
     setEmail("")
     setMessage("")
@@ -187,12 +209,12 @@ export default function LandingPage() {
 
   return (
     <div className={`min-h-screen w-full ${darkMode ? "dark" : ""}`}>
-      <div className="bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 text-slate-900 dark:text-slate-50">
-        <header className="fixed w-full top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+      <div className="bg-gradient-to-b from-orange-50 to-white dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 dark:text-orange-50">
+        <header className="fixed w-full top-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-lg border-b border-orange-200 dark:border-orange-800">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center space-x-2">
-                <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400 dark:from-orange-400 dark:to-orange-300">
                   Quita.AI
                 </span>
               </Link>
@@ -207,7 +229,7 @@ export default function LandingPage() {
                   </SheetTrigger>
                   <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                     <SheetHeader>
-                      <SheetTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+                      <SheetTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400">
                         Menu
                       </SheetTitle>
                     </SheetHeader>
@@ -216,23 +238,22 @@ export default function LandingPage() {
                         <Link
                           key={item.id}
                           href={item.href}
-                          className="text-lg font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                          className="text-lg font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                           onClick={() => setMenuOpen(false)}
                         >
                           {item.name}
                         </Link>
                       ))}
                       <Link href="/login" className="text-center">
-                        <Button className="w-full bg-blue-600 text-white hover:opacity-90 rounded-full mt-2">
+                        <Button className="w-full bg-orange-600 text-white hover:bg-zinc-700 rounded-full mt-2">
                           Login
                         </Button>
                       </Link>
                       <Link href="/cadastro" className="text-center">
-                        <Button className="w-full bg-purple-600 text-white hover:opacity-90 rounded-full mt-2">
+                        <Button className="w-full bg-orange-500 text-white hover:bg-zinc-600 rounded-full mt-2">
                           Cadastro
                         </Button>
                       </Link>
-                      {/* Toggle de Modo Escuro no Menu Mobile */}
                       <div className="flex justify-center mt-4">
                         <TooltipProvider>
                           <Tooltip>
@@ -241,7 +262,7 @@ export default function LandingPage() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={toggleDarkMode}
-                                className="rounded-full bg-slate-100 dark:bg-slate-800"
+                                className="rounded-full bg-orange-100 dark:bg-zinc-800"
                               >
                                 {darkMode ? (
                                   <Sun className="h-5 w-5" />
@@ -267,7 +288,7 @@ export default function LandingPage() {
                     <Link
                       key={item.id}
                       href={item.href}
-                      className="text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      className="text-sm font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -280,7 +301,7 @@ export default function LandingPage() {
                         variant="ghost"
                         size="icon"
                         onClick={toggleDarkMode}
-                        className="rounded-full bg-slate-100 dark:bg-slate-800"
+                        className="rounded-full bg-orange-100 dark:bg-zinc-800"
                       >
                         {darkMode ? (
                           <Sun className="h-5 w-5" />
@@ -295,12 +316,12 @@ export default function LandingPage() {
                   </Tooltip>
                 </TooltipProvider>
                 <Link href="/login">
-                  <Button className="bg-blue-600 text-white hover:opacity-90 rounded-full">
+                  <Button className="bg-orange-600 text-white hover:bg-orange-700 rounded-full">
                     Login
                   </Button>
                 </Link>
                 <Link href="/cadastro">
-                  <Button className="bg-purple-600 text-white hover:opacity-90 rounded-full">
+                  <Button className="bg-orange-500 text-white hover:bg-orange-600 rounded-full">
                     Cadastro
                   </Button>
                 </Link>
@@ -310,63 +331,58 @@ export default function LandingPage() {
         </header>
 
         <main className="pt-20">
-          {/* Hero Section */}
+          {/* Seção Hero */}
           <section id="inicio" className="py-20 md:py-32">
             <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
-                  <div className="inline-flex items-center rounded-full border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-900/20 px-4 py-1.5 mb-6">
-                    <span className="text-sm font-medium text-purple-600 dark:text-purple-400">
+                  <div className="inline-flex items-center rounded-full border border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-zinc-900/20 px-4 py-1.5 mb-6">
+                    <span className="text-sm font-medium text-orange-600 dark:text-orange-400">
                       Análise com IA
                     </span>
                   </div>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-snug">
                     Recupere o controle das suas{" "}
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400 dark:from-orange-400 dark:to-orange-300">
                       finanças
                     </span>{" "}
                     e sua{" "}
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400 dark:from-orange-400 dark:to-orange-300">
                       tranquilidade
                     </span>
                   </h1>
-                  <p className="text-lg sm:text-xl mb-8 text-slate-600 dark:text-slate-300">
+                  <p className="text-lg sm:text-xl mb-8 text-orange-700 dark:text-orange-300">
                     Transforme sua vida financeira com o poder da IA. Análise personalizada, plano
                     de ação para quitação de dívidas e acompanhamento em tempo real.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90 rounded-full h-12 px-8">
+                    <Button className="bg-gradient-to-r from-orange-600 to-orange-400 text-white hover:opacity-90 rounded-full h-12 px-8">
                       Comece Gratuitamente
                     </Button>
-                    <Button variant="outline" className="rounded-full h-12 px-8">
+                    <Button variant="outline" className="rounded-full h-12 px-8 border-orange-400 text-orange-600 hover:bg-orange-100">
                       Ver Demonstração
                     </Button>
                   </div>
                 </div>
                 <div className="md:w-1/2">
                   <div className="relative w-full h-64 sm:h-80 md:h-full">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                    <Image
-                      src="/placeholder.svg?height=600&width=600"
-                      alt="Quita.AI Dashboard"
-                      layout="fill"
-                      objectFit="cover"
-                      className="relative rounded-lg shadow-2xl"
-                    />
+                    <div className="absolute -inset-1  rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+            <video className="rounded-2xl" width={1000} height={500} autoPlay controls>
+              
+              <source src="/lv_0_20241110113729.mp4" type="video/mp4"/>
+            </video>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-   
-
-          {/* Recursos */}
+          {/* Seção Recursos */}
           <section id="recursos" className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Recursos Poderosos</h2>
-                <p className="text-lg text-slate-600 dark:text-slate-300">
+                <p className="text-lg text-orange-700 dark:text-orange-300">
                   Tecnologia de ponta para transformar sua saúde financeira
                 </p>
               </div>
@@ -374,16 +390,16 @@ export default function LandingPage() {
                 {features.map((feature) => (
                   <Card
                     key={feature.id}
-                    className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
+                    className="border-none shadow-lg bg-white/50 dark:bg-orange-700 backdrop-blur-sm"
                   >
                     <CardContent className="p-6">
                       <div
-                        className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}
+                        className={`w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-700 flex items-center justify-center mb-4`}
                       >
-                        <feature.icon className={`w-6 h-6 ${feature.color}`} />
+                        <feature.icon className={`w-6 h-6 text-orange-600 dark:text-orange-300`} />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                      <p className="text-slate-600 dark:text-slate-300">{feature.description}</p>
+                      <p className="text-orange-700 dark:text-orange-300">{feature.description}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -391,26 +407,99 @@ export default function LandingPage() {
             </div>
           </section>
 
-  
+          {/* Nova Seção: Como Funciona */}
+          <section id="como-funciona" className="py-20 bg-orange-100 dark:bg-orange-900">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Como o Quita.AI Funciona</h2>
+                <p className="text-lg text-orange-700 dark:text-orange-300">
+                  Três passos simples para sua liberdade financeira
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                    <DollarSign className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">1. Conecte suas Contas</h3>
+                  <p className="text-orange-700 dark:text-orange-300">
+                    Conecte suas contas bancárias e cartões de crédito de forma segura para uma análise completa.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                    <BarChart className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">2. Receba sua Análise</h3>
+                  <p className="text-orange-700 dark:text-orange-300">
+                    Nossa IA analisa seus dados e cria um plano personalizado para quitar suas dívidas.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                    <CheckCircle className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">3. Implemente e Acompanhe</h3>
+                  <p className="text-orange-700 dark:text-orange-300">
+                    Siga o plano e acompanhe seu progresso em tempo real, com ajustes automáticos conforme necessário.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
 
-          {/* FAQ */}
-          <section id="faq" className="py-20">
+          {/* Seção Depoimentos */}
+          <section id="depoimentos" className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">O Que Nossos Clientes Dizem</h2>
+                <p className="text-lg text-orange-700 dark:text-orange-300">
+                  Histórias reais de pessoas que transformaram suas vidas financeiras com o Quita.AI
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {testimonials.map((testimonial) => (
+                  <Card key={testimonial.id} className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        <Image
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          width={48}
+                          height={48}
+                          className="rounded-full mr-4"
+                        />
+                        <div>
+                          <h3 className="font-semibold">{testimonial.name}</h3>
+                          <p className="text-sm text-orange-600 dark:text-orange-400">{testimonial.role}</p>
+                        </div>
+                      </div>
+                      <p className="text-orange-700 dark:text-orange-300">{testimonial.content}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Seção FAQ */}
+          <section id="faq" className="py-20 bg-orange-50 dark:bg-orange-900/50">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Perguntas Frequentes</h2>
-                <p className="text-lg text-slate-600 dark:text-slate-300">
+                <p className="text-lg text-orange-700 dark:text-orange-300">
                   Respostas para as dúvidas mais comuns
                 </p>
               </div>
-              <div className="max-w-3xl mx-auto">
+              <div className="max-w-3xl mx-auto ">
                 <Accordion type="single" collapsible>
                   {faqs.map((faq, index) => (
                     <AccordionItem key={index} value={`faq-${index}`}>
-                      <AccordionTrigger className="text-left text-lg font-medium py-4">
+                      <AccordionTrigger className="text-left text-lg font-medium py-4 ">
                         {faq.question}
-                        <ChevronDown className="ml-2 h-5 w-5 text-purple-600 dark:text-purple-400" />
+
                       </AccordionTrigger>
-                      <AccordionContent className="pb-4 text-slate-600 dark:text-slate-300">
+                      <AccordionContent className="pb-4 text-orange-700 dark:text-orange-300">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -419,12 +508,13 @@ export default function LandingPage() {
               </div>
             </div>
           </section>
-                 {/* Sobre Nós */}
-                 <section id="sobre" className="py-20 bg-slate-50 dark:bg-slate-900/50">
+
+          {/* Seção Sobre Nós */}
+          <section id="sobre" className="py-20 bg-orange-100 dark:bg-orange-900/50">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossa Equipe</h2>
-                <p className="text-lg text-slate-600 dark:text-slate-300">
+                <p className="text-lg text-orange-700 dark:text-orange-300">
                   Conheça as pessoas por trás do Quita.AI
                 </p>
               </div>
@@ -432,7 +522,7 @@ export default function LandingPage() {
                 {teamMembers.map((member) => (
                   <Card
                     key={member.id}
-                    className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm"
+                    className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm"
                   >
                     <CardContent className="p-6 text-center">
                       <Image
@@ -443,19 +533,15 @@ export default function LandingPage() {
                         className="mx-auto rounded-full mb-4"
                       />
                       <h3 className="text-xl font-semibold">{member.name}</h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                      <p className="text-sm text-orange-700 dark:text-orange-300 mb-4">
                         {member.role}
                       </p>
                       <div className="flex justify-center space-x-4">
                         <Link href={member.linkedin} passHref target="_blank" rel="noopener noreferrer">
-                        
-                            <Linkedin className="w-6 h-6 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600" />
-                         
+                          <Linkedin className="w-6 h-6 text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300" />
                         </Link>
                         <Link href={member.github} passHref target="_blank" rel="noopener noreferrer">
-                        
-                            <Github className="w-6 h-6 text-gray-800 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-400" />
-                        
+                          <Github className="w-6 h-6 text-orange-800 hover:text-orange-600 dark:text-orange-200 dark:hover:text-orange-400" />
                         </Link>
                       </div>
                     </CardContent>
@@ -465,17 +551,17 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* Contato */}
-          <section id="contato" className="py-20 bg-slate-50 dark:bg-slate-900/50">
+          {/* Seção Contato */}
+          <section id="contato" className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Entre em Contato</h2>
-                <p className="text-lg text-slate-600 dark:text-slate-300">
+                <p className="text-lg text-orange-700 dark:text-orange-300">
                   Estamos aqui para ajudar você a recuperar sua liberdade financeira
                 </p>
               </div>
               <div className="max-w-lg mx-auto">
-                <Card className="border-none shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
+                <Card className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div>
@@ -488,7 +574,7 @@ export default function LandingPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900 w-full"
+                          className="bg-white dark:bg-orange-900 w-full"
                         />
                       </div>
                       <div>
@@ -501,7 +587,7 @@ export default function LandingPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900 w-full"
+                          className="bg-white dark:bg-orange-900 w-full"
                         />
                       </div>
                       <div>
@@ -513,12 +599,12 @@ export default function LandingPage() {
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           required
-                          className="bg-white dark:bg-slate-900 w-full"
+                          className="bg-white dark:bg-orange-900 w-full"
                         />
                       </div>
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90 rounded-full h-12"
+                        className="w-full bg-gradient-to-r from-orange-600 to-orange-400 text-white hover:opacity-90 rounded-full h-12"
                       >
                         Enviar Mensagem
                       </Button>
@@ -535,7 +621,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <Link href="/" className="inline-block mb-4">
-                  <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                  <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-orange-400 dark:from-orange-400 dark:to-orange-300">
                     Quita.AI
                   </span>
                 </Link>

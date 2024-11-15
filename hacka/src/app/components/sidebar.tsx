@@ -65,6 +65,12 @@ export default function Sidebar() {
     }
   }, [])
 
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem("darkMode") === "true"
+    setTheme(isDarkMode ? "dark" : "light")
+    document.documentElement.classList.toggle("dark", isDarkMode)
+  }, [setTheme])
+
   if (!mounted) {
     return null
   }
@@ -74,7 +80,10 @@ export default function Sidebar() {
   }
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
+    const newTheme = theme === "dark" ? "light" : "dark"
+    setTheme(newTheme)
+    localStorage.setItem("darkMode", (newTheme === "dark").toString())
+    document.documentElement.classList.toggle("dark", newTheme === "dark")
   }
 
   const isDarkMode = theme === 'dark'

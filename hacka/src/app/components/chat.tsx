@@ -92,7 +92,7 @@ export default function ChatPage() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
-          className="fixed bottom-20 right-4 rounded-full w-16 h-16 p-0 shadow-lg"
+          className="fixed bottom-20 right-4 w-16 h-16 p-0 shadow-lg bg-orange-600 text-white hover:bg-orange-700 rounded-full"
           onClick={() => setIsOpen(true)}
         >
           <MessageCircle className="h-8 w-8" />
