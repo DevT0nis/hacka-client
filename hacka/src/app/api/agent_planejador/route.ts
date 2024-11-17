@@ -170,10 +170,9 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
       const conteudo = completion.choices[0]?.message?.content;
       if (conteudo) {
         try {
-          // Tenta analisar o conteúdo como JSON
           planoFinanceiro = JSON.parse(conteudo);
-        } catch (jsonError) {
-          // Se falhar, trata como texto e cria um objeto com o conteúdo
+        } catch (erro) {
+
           console.log('Resposta não é JSON válido, tratando como texto.');
           planoFinanceiro = { plano: conteudo };
         }

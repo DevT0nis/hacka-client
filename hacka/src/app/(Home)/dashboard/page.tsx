@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
-import { ArrowRight, CheckCircle, DollarSign, TrendingUp, AlertCircle, Printer, Edit3, Sun, Moon } from 'lucide-react'
+import { CheckCircle, DollarSign, TrendingUp, AlertCircle, Printer, Edit3, Sun, Moon } from 'lucide-react'
 import { useTheme } from "next-themes"
 
 interface DadosUsuario {
