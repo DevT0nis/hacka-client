@@ -158,7 +158,7 @@ function PrioridadesPagamento({ prioridades }: { prioridades: PlanoFinanceiro['p
                 <span className="text-orange-600 dark:text-orange-400">R$ {prioridade.valor.toFixed(2)}</span>
               </div>
               <p className="text-sm text-zinc-600 dark:text-zinc-300">{prioridade.justificativa}</p>
-              <Progress value={((index + 1) / prioridades.length) * 100} className="mt-2 bg-orange-200 dark:bg-orange-700" indicatorClassName="bg-orange-600 dark:bg-orange-400" />
+              <Progress value={((index + 1) / prioridades.length) * 100} className="mt-2 bg-orange-200 dark:bg-orange-700"/>
             </li>
           ))}
         </ul>
