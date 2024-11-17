@@ -171,9 +171,9 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
       if (conteudo) {
         try {
           planoFinanceiro = JSON.parse(conteudo);
-        } catch (erro) {
+        } catch (jsonError) {
 
-          console.log('Resposta não é JSON válido, tratando como texto.');
+          console.log('Resposta não é JSON válido, tratando como texto.', jsonError);
           planoFinanceiro = { plano: conteudo };
         }
       } else {
