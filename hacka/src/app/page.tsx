@@ -209,7 +209,7 @@ export default function LandingPage() {
   return (
     <div className={`min-h-screen w-full ${darkMode ? "dark" : ""}`}>
       <div className="bg-gradient-to-b from-orange-50 to-white dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 dark:text-orange-50">
-        <header className="fixed w-full top-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-lg border-b border-orange-200 dark:border-orange-800">
+        <header className="fixed w-full top-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-lg border-b border-orange-200 dark:border-zinc-800">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center space-x-2">
@@ -244,12 +244,12 @@ export default function LandingPage() {
                         </Link>
                       ))}
                       <Link href="/login" className="text-center">
-                        <Button className="w-full bg-orange-600 text-white hover:bg-zinc-700 rounded-full mt-2">
+                        <Button className="w-full bg-orange-600 text-white hover:bg-orange-700 rounded-full mt-2">
                           Login
                         </Button>
                       </Link>
                       <Link href="/cadastro" className="text-center">
-                        <Button className="w-full bg-orange-500 text-white hover:bg-zinc-600 rounded-full mt-2">
+                        <Button className="w-full bg-orange-500 text-white hover:bg-orange-600 rounded-full mt-2">
                           Cadastro
                         </Button>
                       </Link>
@@ -335,9 +335,9 @@ export default function LandingPage() {
             <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
-                  <div className="inline-flex items-center rounded-full border border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-zinc-900/20 px-4 py-1.5 mb-6">
+                  <div className="inline-flex items-center rounded-full border border-orange-200 dark:border-zinc-700 bg-orange-50 dark:bg-zinc-800/50 px-4 py-1.5 mb-6">
                     <span className="text-sm font-medium text-orange-600 dark:text-orange-400">
-                      Análise com IA
+                      Análise completa com I.A
                     </span>
                   </div>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-snug">
@@ -358,18 +358,17 @@ export default function LandingPage() {
                     <Button className="bg-gradient-to-r from-orange-600 to-orange-400 text-white hover:opacity-90 rounded-full h-12 px-8">
                       Comece Gratuitamente
                     </Button>
-                    <Button variant="outline" className="rounded-full h-12 px-8 border-orange-400 text-orange-600 hover:bg-orange-100">
+                    <Button variant="outline" className="rounded-full h-12 px-8 border-orange-400 text-orange-600 hover:bg-orange-100 dark:border-orange-500 dark:text-orange-400 dark:hover:bg-zinc-800">
                       Ver Demonstração
                     </Button>
                   </div>
                 </div>
                 <div className="md:w-1/2">
                   <div className="relative w-full h-64 sm:h-80 md:h-full">
-                    <div className="absolute -inset-1  rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-            <video className="rounded-2xl" width={1000} height={500} autoPlay controls>
-              
-              <source src="/lv_0_20241110113729.mp4" type="video/mp4"/>
-            </video>
+                    <div className="absolute -inset-1 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <video className="rounded-2xl" width={1000} height={500} autoPlay controls>
+                      <source src="/lv_0_20241110113729.mp4" type="video/mp4"/>
+                    </video>
                   </div>
                 </div>
               </div>
@@ -389,13 +388,13 @@ export default function LandingPage() {
                 {features.map((feature) => (
                   <Card
                     key={feature.id}
-                    className="border-none shadow-lg bg-white/50 dark:bg-orange-700 backdrop-blur-sm"
+                    className="border-none shadow-lg bg-white/50 dark:bg-zinc-800/30 backdrop-blur-sm"
                   >
                     <CardContent className="p-6">
                       <div
-                        className={`w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-700 flex items-center justify-center mb-4`}
+                        className={`w-12 h-12 rounded-lg bg-orange-100 dark:bg-zinc-700 flex items-center justify-center mb-4`}
                       >
-                        <feature.icon className={`w-6 h-6 text-orange-600 dark:text-orange-300`} />
+                        <feature.icon className={`w-6 h-6 text-orange-600 dark:text-orange-400`} />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                       <p className="text-orange-700 dark:text-orange-300">{feature.description}</p>
@@ -407,7 +406,7 @@ export default function LandingPage() {
           </section>
 
           {/* Nova Seção: Como Funciona */}
-          <section id="como-funciona" className="py-20 bg-orange-100 dark:bg-orange-900">
+          <section id="como-funciona" className="py-20 bg-orange-100 dark:bg-zinc-900">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Como o Quita.AI Funciona</h2>
@@ -417,7 +416,7 @@ export default function LandingPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center mb-4">
                     <DollarSign className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">1. Conecte suas Contas</h3>
@@ -426,7 +425,7 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center mb-4">
                     <BarChart className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">2. Receba sua Análise</h3>
@@ -435,7 +434,7 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-orange-500 dark:bg-orange-600 rounded-full flex items-center justify-center mb-4">
                     <CheckCircle className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">3. Implemente e Acompanhe</h3>
@@ -458,7 +457,7 @@ export default function LandingPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {testimonials.map((testimonial) => (
-                  <Card key={testimonial.id} className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm">
+                  <Card key={testimonial.id} className="border-none shadow-lg bg-white/50 dark:bg-zinc-800/30 backdrop-blur-sm">
                     <CardContent className="p-6">
                       <div className="flex items-center mb-4">
                         <Image
@@ -482,7 +481,7 @@ export default function LandingPage() {
           </section>
 
           {/* Seção FAQ */}
-          <section id="faq" className="py-20 bg-orange-50 dark:bg-orange-900/50">
+          <section id="faq" className="py-20 bg-orange-50 dark:bg-zinc-900">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Perguntas Frequentes</h2>
@@ -490,13 +489,12 @@ export default function LandingPage() {
                   Respostas para as dúvidas mais comuns
                 </p>
               </div>
-              <div className="max-w-3xl mx-auto ">
+              <div className="max-w-3xl mx-auto">
                 <Accordion type="single" collapsible>
                   {faqs.map((faq, index) => (
                     <AccordionItem key={index} value={`faq-${index}`}>
-                      <AccordionTrigger className="text-left text-lg font-medium py-4 ">
+                      <AccordionTrigger className="text-left text-lg font-medium py-4">
                         {faq.question}
-
                       </AccordionTrigger>
                       <AccordionContent className="pb-4 text-orange-700 dark:text-orange-300">
                         {faq.answer}
@@ -509,7 +507,7 @@ export default function LandingPage() {
           </section>
 
           {/* Seção Sobre Nós */}
-          <section id="sobre" className="py-20 bg-orange-100 dark:bg-orange-900/50">
+          <section id="sobre" className="py-20 bg-orange-100 dark:bg-zinc-900">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossa Equipe</h2>
@@ -521,7 +519,7 @@ export default function LandingPage() {
                 {teamMembers.map((member) => (
                   <Card
                     key={member.id}
-                    className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm"
+                    className="border-none shadow-lg bg-white/50 dark:bg-zinc-800/30 backdrop-blur-sm"
                   >
                     <CardContent className="p-6 text-center">
                       <Image
@@ -540,7 +538,7 @@ export default function LandingPage() {
                           <Linkedin className="w-6 h-6 text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300" />
                         </Link>
                         <Link href={member.github} passHref target="_blank" rel="noopener noreferrer">
-                          <Github className="w-6 h-6 text-orange-800 hover:text-orange-600 dark:text-orange-200 dark:hover:text-orange-400" />
+                          <Github className="w-6 h-6 text-orange-800 hover:text-orange-600 dark:text-orange-300 dark:hover:text-orange-200" />
                         </Link>
                       </div>
                     </CardContent>
@@ -551,20 +549,20 @@ export default function LandingPage() {
           </section>
 
           {/* Seção Contato */}
-          <section id="contato" className="py-20">
+          <section id="contato" className="py-20 bg-orange-50 dark:bg-zinc-950">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Entre em Contato</h2>
-                <p className="text-lg text-orange-700 dark:text-orange-300">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-orange-300">Entre em Contato</h2>
+                <p className="text-lg text-orange-400">
                   Estamos aqui para ajudar você a recuperar sua liberdade financeira
                 </p>
               </div>
               <div className="max-w-lg mx-auto">
-                <Card className="border-none shadow-lg bg-white/50 dark:bg-orange-800/50 backdrop-blur-sm">
+                <Card className="border-none shadow-lg bg-orange-900 backdrop-blur-sm dark:bg-zinc-900/50">
                   <CardContent className="p-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-2">
+                        <label htmlFor="name" className="block text-sm font-medium mb-2 text-orange-300">
                           Nome
                         </label>
                         <Input
@@ -573,11 +571,11 @@ export default function LandingPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           required
-                          className="bg-white dark:bg-orange-900 w-full"
+                          className="bg-orange-50 text-zinc-950 placeholder-orange-300 w-full dark:bg-zinc-800/50 text-orange-100 placeholder-orange-300 w-full"
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-2">
+                        <label htmlFor="email" className="block text-sm font-medium mb-2 text-orange-300">
                           E-mail
                         </label>
                         <Input
@@ -586,11 +584,11 @@ export default function LandingPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          className="bg-white dark:bg-orange-900 w-full"
+                          className="bg-orange-50 text-zinc-950 placeholder-orange-300 w-full dark:bg-zinc-800/50 text-orange-100 placeholder-orange-300 w-full"
                         />
                       </div>
                       <div>
-                        <label htmlFor="message" className="block text-sm font-medium mb-2">
+                        <label htmlFor="message" className="block text-sm font-medium mb-2 text-orange-300">
                           Mensagem
                         </label>
                         <Textarea
@@ -598,12 +596,12 @@ export default function LandingPage() {
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           required
-                          className="bg-white dark:bg-orange-900 w-full"
+                          className="bg-orange-50 text-zinc-950 placeholder-orange-300 w-full dark:bg-zinc-800/50 text-orange-100 placeholder-orange-300 w-full"
                         />
                       </div>
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-orange-600 to-orange-400 text-white hover:opacity-90 rounded-full h-12"
+                        className="w-full bg-gradient-to-r from-orange-500 to-orange-300 text-zinc-950 hover:opacity-90 rounded-full h-12 dark:bg-zinc-800/50 text-orange-100 placeholder-orange-300 "
                       >
                         Enviar Mensagem
                       </Button>
@@ -615,7 +613,7 @@ export default function LandingPage() {
           </section>
         </main>
 
-        <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-12">
+        <footer className="bg-orange-100 dark:bg-zinc-950 border-t border-orange-200 dark:border-orange-800 py-12">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
               <div>
@@ -624,7 +622,7 @@ export default function LandingPage() {
                     Quita.AI
                   </span>
                 </Link>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-black dark:text-orange-100">
                   Transformando vidas através da inteligência financeira
                 </p>
               </div>
@@ -635,7 +633,7 @@ export default function LandingPage() {
                     <Link
                       key={item.id}
                       href={item.href}
-                      className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                      className="text-sm text-slate-600 dark:text-orange-100 hover:text-orange-600 dark:hover:text-orange-400"
                     >
                       {item.name}
                     </Link>
@@ -647,19 +645,19 @@ export default function LandingPage() {
                 <nav className="flex flex-col space-y-2">
                   <Link
                     href="#"
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                    className="text-sm text-slate-600 dark:text-orange-100 hover:text-purple-600 dark:hover:text-purple-400"
                   >
                     Termos de Uso
                   </Link>
                   <Link
                     href="#"
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                    className="text-sm text-slate-600 dark:text-orange-100 hover:text-purple-600 dark:hover:text-purple-400"
                   >
                     Política de Privacidade
                   </Link>
                   <Link
                     href="#"
-                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400"
+                    className="text-sm text-slate-600 dark:text-orange-100 hover:text-purple-600 dark:hover:text-purple-400"
                   >
                     Cookies
                   </Link>
@@ -668,12 +666,12 @@ export default function LandingPage() {
               <div>
                 <h3 className="font-semibold mb-4">Redes Sociais</h3>
                 <div className="flex space-x-4">
-                  {/* Ícones das redes sociais */}
+              
                 </div>
               </div>
             </div>
-            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800">
-              <p className="text-center text-sm text-slate-600 dark:text-slate-400">
+            <div className="mt-8 pt-8 border-t border-orange-200 dark:border-orange-800">
+              <p className="text-center text-sm text-slate-600 dark:text-orange-100">
                 © {new Date().getFullYear()} Quita.AI. Todos os direitos reservados.
               </p>
             </div>

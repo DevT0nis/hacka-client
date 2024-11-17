@@ -285,22 +285,22 @@ export default function Sidebar() {
           >
             <div className="flex items-center space-x-3">
               <Avatar>
-                <AvatarImage src="/time/marcelo.jpeg" alt="Marcelo" />
+                <AvatarImage src="/time/anthony.jpg" alt="Marcelo" />
                 <AvatarFallback className={cn(
                   isDarkMode ? "bg-zinc-800 text-zinc-300" : "bg-zinc-200 text-zinc-700"
                 )}>
-                  MA
+                  AT
                 </AvatarFallback>
               </Avatar>
               <div>
                 <p className={cn(
                   "text-sm font-medium",
                   isDarkMode ? "text-zinc-300" : "text-zinc-700"
-                )}>Marcelo Aggio</p>
+                )}>Anthony Thomas</p>
                 <p className={cn(
                   "text-xs",
                   isDarkMode ? "text-zinc-500" : "text-zinc-600"
-                )}>marceloaggio@yahoo.com</p>
+                )}>anthonythomascloud@gmail.com</p>
               </div>
             </div>
             <Button

@@ -169,29 +169,30 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
     try {
       const conteudo = completion.choices[0]?.message?.content;
       if (conteudo) {
-        // Tenta analisar o conteúdo como JSON
-        planoFinanceiro = JSON.parse(conteudo);
+        try {
+          // Tenta analisar o conteúdo como JSON
+          planoFinanceiro = JSON.parse(conteudo);
+        } catch (jsonError) {
+          // Se falhar, trata como texto e cria um objeto com o conteúdo
+          console.log('Resposta não é JSON válido, tratando como texto.');
+          planoFinanceiro = { plano: conteudo };
+        }
       } else {
         throw new Error('Nenhum conteúdo recebido da API Groq');
       }
     } catch (erroAnalise) {
-      console.error('Erro ao analisar resposta da API Groq:', erroAnalise);
-      // Se a análise falhar, retorna o conteúdo bruto para depuração
+      console.error('Erro ao processar resposta da API Groq:', erroAnalise);
       planoFinanceiro = {
-        erro: 'Falha ao analisar resposta da IA',
+        erro: 'Falha ao processar resposta da IA',
         conteudoBruto: completion.choices[0]?.message?.content,
       };
     }
 
-    if (!planoFinanceiro || typeof planoFinanceiro !== 'object') {
-      planoFinanceiro = {
-        erro: 'Resposta inválida da IA',
-        conteudoBruto: completion.choices[0]?.message?.content,
-      };
-    }
+    // Adicione um log para debug
+    console.log('Plano Financeiro processado:', JSON.stringify(planoFinanceiro, null, 2));
 
     // Salva os dados em um arquivo de texto
-    const nomeArquivo = `plano_financeiro_${Date.now()}.txt`;
+    const nomeArquivo = 'plano_financeiro.txt';
     const caminhoArquivo = path.join(
       process.cwd(),
       'public',
@@ -205,15 +206,20 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
       JSON.stringify({ dadosUsuario: dados, planoGeradoPelaIA: planoFinanceiro }, null, 2)
     );
 
-    return NextResponse.json({ ...planoFinanceiro, nomeArquivo });
+    return NextResponse.json({
+      planoFinanceiro,
+      nomeArquivo,
+      mensagem: 'Plano financeiro processado com sucesso.'
+    });
   } catch (erro: unknown) {
     console.error('Erro:', erro);
     let errorMessage: string;
     if (erro instanceof Error) {
       errorMessage = erro.message;
     } else {
-      errorMessage = 'An unknown error occurred.';
+      errorMessage = 'Ocorreu um erro desconhecido.';
     }
+    console.error('Detalhes do erro:', errorMessage);
     return NextResponse.json(
       { erro: 'Falha ao processar o plano financeiro', detalhes: errorMessage },
       { status: 500 }
