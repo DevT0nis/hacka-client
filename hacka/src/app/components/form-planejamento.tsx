@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Plus, Minus } from 'lucide-react'
 
 interface Divida {
   valor: string
@@ -141,7 +141,7 @@ export default function FormularioPlanejamentoFinanceiro() {
               value={formData.rendaMensal}
               onChange={(e) => handleInputChange('rendaMensal', e.target.value)}
               placeholder="R$ 0,00"
-              className="text-lg"
+              className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
             />
           </div>
         )
@@ -155,7 +155,7 @@ export default function FormularioPlanejamentoFinanceiro() {
               value={formData.gastosFixes}
               onChange={(e) => handleInputChange('gastosFixes', e.target.value)}
               placeholder="R$ 0,00"
-              className="text-lg"
+              className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
             />
           </div>
         )
@@ -169,7 +169,7 @@ export default function FormularioPlanejamentoFinanceiro() {
               value={formData.gastosVariaveis}
               onChange={(e) => handleInputChange('gastosVariaveis', e.target.value)}
               placeholder="R$ 0,00"
-              className="text-lg"
+              className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
             />
           </div>
         )
@@ -178,37 +178,37 @@ export default function FormularioPlanejamentoFinanceiro() {
           <div className="space-y-4">
             <Label>Dívidas</Label>
             {formData.dividas.map((divida, index) => (
-              <div key={index} className="space-y-2 p-4 bg-gray-100 rounded-lg">
+              <div key={index} className="space-y-2 p-4 bg-orange-100 rounded-lg">
                 <Input
                   type="number"
                   value={divida.valor}
                   onChange={(e) => handleDividaChange(index, 'valor', e.target.value)}
                   placeholder="Valor da dívida"
-                  className="text-lg"
+                  className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
                 />
                 <Input
                   type="text"
                   value={divida.prazo}
                   onChange={(e) => handleDividaChange(index, 'prazo', e.target.value)}
                   placeholder="Prazo (ex: 12 meses)"
-                  className="text-lg"
+                  className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
                 />
                 <Input
                   type="number"
                   value={divida.taxaJuros}
                   onChange={(e) => handleDividaChange(index, 'taxaJuros', e.target.value)}
                   placeholder="Taxa de juros (%)"
-                  className="text-lg"
+                  className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
                 />
                 {index > 0 && (
-                  <Button type="button" variant="destructive" onClick={() => removerDivida(index)}>
-                    Remover Dívida
+                  <Button type="button" variant="destructive" onClick={() => removerDivida(index)} className="bg-red-500 hover:bg-red-600">
+                    <Minus className="mr-2 h-4 w-4" /> Remover Dívida
                   </Button>
                 )}
               </div>
             ))}
-            <Button type="button" onClick={adicionarDivida} className="w-full">
-              Adicionar Dívida
+            <Button type="button" onClick={adicionarDivida} className="w-full bg-orange-500 hover:bg-orange-600 text-white">
+              <Plus className="mr-2 h-4 w-4" /> Adicionar Dívida
             </Button>
           </div>
         )
@@ -221,7 +221,7 @@ export default function FormularioPlanejamentoFinanceiro() {
               value={formData.objetivoPagamento}
               onChange={(e) => handleInputChange('objetivoPagamento', e.target.value)}
               placeholder="Ex: Quitar todas as dívidas"
-              className="text-lg"
+              className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
             />
           </div>
         )
@@ -234,7 +234,7 @@ export default function FormularioPlanejamentoFinanceiro() {
               value={formData.prazoPagamento}
               onChange={(e) => handleInputChange('prazoPagamento', e.target.value)}
               placeholder="Ex: 24 meses"
-              className="text-lg"
+              className="text-lg bg-orange-50 border-orange-300 focus:border-orange-500 focus:ring-orange-500"
             />
           </div>
         )
@@ -244,14 +244,14 @@ export default function FormularioPlanejamentoFinanceiro() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-3xl font-bold text-primary">Planejamento Financeiro</CardTitle>
-        <CardDescription className="text-lg">
+    <Card className="w-full max-w-2xl mx-auto bg-white shadow-lg">
+      <CardHeader className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+        <CardTitle className="text-3xl font-bold">Planejamento Financeiro</CardTitle>
+        <CardDescription className="text-lg text-orange-100">
           {etapas[etapaAtual].descricao}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={etapaAtual}
@@ -264,14 +264,14 @@ export default function FormularioPlanejamentoFinanceiro() {
           </motion.div>
         </AnimatePresence>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button onClick={voltarEtapa} disabled={etapaAtual === 0}>
-          Voltar
+      <CardFooter className="flex justify-between bg-orange-50 p-4">
+        <Button onClick={voltarEtapa} disabled={etapaAtual === 0} className="bg-orange-300 text-orange-800 hover:bg-orange-400">
+          <ChevronLeft className="mr-2 h-4 w-4" /> Voltar
         </Button>
         <Button
           onClick={avancarEtapa}
           disabled={!validarEtapa() || carregando}
-          className="bg-primary hover:bg-primary-dark transition-colors duration-300"
+          className="bg-orange-500 hover:bg-orange-600 text-white"
         >
           {etapaAtual === etapas.length - 1 ? (
             carregando ? 'Processando...' : 'Finalizar'
@@ -283,12 +283,12 @@ export default function FormularioPlanejamentoFinanceiro() {
           )}
         </Button>
       </CardFooter>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 pb-4">
         {etapas.map((_, index) => (
           <motion.div
             key={index}
             className={`h-2 w-2 rounded-full mx-1 ${
-              index === etapaAtual ? 'bg-primary' : 'bg-gray-300'
+              index === etapaAtual ? 'bg-orange-500' : 'bg-orange-200'
             }`}
             animate={{
               scale: index === etapaAtual ? 1.5 : 1,
@@ -300,3 +300,4 @@ export default function FormularioPlanejamentoFinanceiro() {
     </Card>
   )
 }
+
