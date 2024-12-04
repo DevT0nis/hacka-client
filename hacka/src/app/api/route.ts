@@ -8,24 +8,12 @@ interface Mensagem {
   timestamp?: string
 }
 
-interface RequestBody {
-  message: string
-  messages: Mensagem[]
+interface CorpoRequisicao {
+  mensagem: string
+  mensagens: Mensagem[]
 }
 
-export async function POST(request: NextRequest) {
-  const client = new Groq({
-    apiKey: process.env.GROQ_API_KEY
-  })
-
-  try {
-    const body: RequestBody = await request.json()
-    const { messages } = body
-
-    const chatHistory: Mensagem[] = [
-      {
-        role: 'system',
-        content: `Você é **Toni**, um agente de IA especializado em finanças, criado pela **quita.ai**. Sua missão é ajudar as pessoas a limparem seu nome e melhorarem sua saúde financeira. Você responde exclusivamente sobre assuntos financeiros em **português do Brasil**, de forma **clara** e **concisa**.
+const PROMPT_SISTEMA = `Você é **Toni**, um agente de IA especializado em finanças, criado pela **quita.ai**. Sua missão é ajudar as pessoas a limparem seu nome e melhorarem sua saúde financeira. Você responde exclusivamente sobre assuntos financeiros em **português do Brasil**, de forma **clara** e **concisa**.
 
 **Instruções Específicas:**
 
@@ -77,47 +65,61 @@ Olá! Para limpar seu nome e melhorar seu crédito, você pode seguir os seguint
 
 Seguindo esses passos, você estará no caminho certo para restabelecer sua saúde financeira. Se precisar de mais ajuda, estou aqui para auxiliar!
 \`\`\`
-`,
-      },
-      ...messages.slice(-10).map(({ role, content }) => ({
-        role,
-        content
-      }))
+`
+
+export async function POST(requisicao: NextRequest) {
+  const cliente = new Groq({
+    apiKey: process.env.GROQ_API_KEY
+  })
+
+  try {
+    const corpo: CorpoRequisicao = await requisicao.json()
+    const { mensagens = [], mensagem = '' } = corpo
+
+    const historicoChat: Mensagem[] = [
+      { role: 'system', content: PROMPT_SISTEMA },
+      ...mensagens.slice(-10).map(({ role, content }) => ({ role, content })),
     ]
 
-    const completion = await client.chat.completions.create({
+    if (mensagem) {
+      historicoChat.push({ role: 'user', content: mensagem })
+    }
+
+    const conclusao = await cliente.chat.completions.create({
       model: 'llama3-70b-8192',
-      messages: chatHistory,
-      max_tokens: 500, 
+      messages: historicoChat,
+      max_tokens: 1000, 
       temperature: 0.7,
       top_p: 0.9,
       stream: false
     })
 
-    const resposta = completion.choices[0]?.message?.content
+    const resposta = conclusao.choices[0]?.message?.content
 
     if (!resposta) {
       throw new Error('Resposta vazia do modelo')
     }
 
-    return NextResponse.json({ reply: resposta }, { status: 200 })
+    return NextResponse.json({ resposta: resposta }, { status: 200 })
   } catch (erro: unknown) {
     console.error('Erro na API de chat:', erro)
-    
 
-    let errorMessage: string;
+    let mensagemErro: string
     if (erro instanceof Error) {
-      errorMessage = erro.message;
+      mensagemErro = erro.message
     } else {
-      errorMessage = 'Ocorreu um erro desconhecido.';
+      mensagemErro = 'Ocorreu um erro desconhecido.'
     }
     
     return NextResponse.json(
       { 
-        error: 'Desculpe, não foi possível processar sua mensagem no momento. Por favor, tente novamente.',
-        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        erro: 'Desculpe, não foi possível processar sua mensagem no momento. Por favor, tente novamente.',
+        detalhes: process.env.NODE_ENV === 'development' ? mensagemErro : undefined
       }, 
       { status: 500 }
     )
   }
 }
+
+
+      

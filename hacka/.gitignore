@@ -13,8 +13,6 @@
 # testing
 /coverage
 
-/public/planos_financeiros
-
 # next.js
 /.next/
 /out/

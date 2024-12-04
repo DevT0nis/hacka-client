@@ -94,7 +94,7 @@ export default function Sidebar() {
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg",
+          "fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg ",
           isDarkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"
         )}
       >
