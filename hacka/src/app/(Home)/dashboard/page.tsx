@@ -53,7 +53,7 @@ interface DadosFinanceiros {
 
 async function obterDadosFinanceiros(): Promise<DadosFinanceiros | null> {
   try {
-    const resposta = await fetch('/planos_financeiros/plano_financeiro.txt')
+    const resposta = await fetch('/tmp/plano_financeiro.json');
     if (!resposta.ok) throw new Error('Falha ao buscar dados')
     const dados = await resposta.json()
     return dados
