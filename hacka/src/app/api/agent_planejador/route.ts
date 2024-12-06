@@ -193,8 +193,7 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
     // Salva os dados em um arquivo de texto
     const nomeArquivo = 'plano_financeiro.json';
     const caminhoArquivo = path.join(
-      process.cwd(),
-      'public',
+      '/tmp',
       'planos_financeiros',
       nomeArquivo
     );
