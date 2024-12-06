@@ -227,7 +227,7 @@ Lembre-se: O plano deve ser motivador, realçando os benefícios a longo prazo d
 
 
 export async function GET() {
-  const caminhoArquivo = path.join('/tmp', 'planos_financeiros', 'plano_financeiro.json');
+  const caminhoArquivo = path.join('/tmp', 'plano_financeiro.json');
 
   const dados = await fs.readFile(caminhoArquivo, 'utf8');
   Response.json(JSON.parse(dados));
